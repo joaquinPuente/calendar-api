@@ -1,0 +1,86 @@
+<h1>Calendary of year {{year}}</h1>
+<div class="months-container">
+    {{#each monthsData}}
+    <div class="month-wrapper">
+        <a href="/calendar/{{../year}}/{{this.month}}" class="link-not-style">
+            <h2>{{this.month}}</h2>
+        </a>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sunday</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each this.days}}
+                    <tr>
+                        {{#each this}}
+                        <td>
+                            <a href="/calendar/{{../../../year}}/{{../../month}}/{{this}}" class="link-not-style">{{this}}</a>
+                        </td>
+                        {{/each}}
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{/each}}    
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .months-container {
+        display: flex;
+        flex-direction: column;
+        background-color: whitesmoke;
+    }
+
+    .month-wrapper {
+        margin-bottom: 20px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .link-not-style {
+        text-decoration: none;
+        color: black;
+    }
+</style>

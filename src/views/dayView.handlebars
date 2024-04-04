@@ -1,0 +1,110 @@
+<h1>Day View - {{days}} {{month}} {{year}} </h1>
+
+<div class="month-view">
+    {{#each monthDays}}
+    <div class="day{{#if isCurrentDay}} current-day{{/if}}">
+        {{this}}
+    </div>
+    {{/each}}
+</div>
+    
+<!-- Si hay eventos, mostrar el listado -->
+{{#if events}}
+<div class="event-list">
+    <h2>Events:</h2>
+    {{#each events}}
+    <div class="event">
+        <strong>{{this.title}}</strong><br>
+        <span>{{this.description}}</span>
+    </div>
+    {{/each}}
+</div>
+{{else}}
+<!-- Si no hay eventos, mostrar un mensaje -->
+<p class="not-events">No events for this day.</p>
+{{/if}}
+
+<!-- Formulario para agregar eventos -->
+<div class="add-event-form">
+    <h3>Add event:</h3>
+    <input type="text" id="eventTitle" placeholder="Event title">
+    <input type="text" id="eventDescription" placeholder="Event description">
+    <button onclick="addEvent()">Add Event</button>
+</div>
+
+<script>
+    function addEvent() {
+        const title = document.getElementById('eventTitle').value;
+        const description = document.getElementById('eventDescription').value;
+
+        // Enviar los datos del nuevo evento al servidor o procesarlos de alguna otra manera
+        // Aquí puedes utilizar AJAX o cualquier otro método para enviar los datos
+
+        // Luego, podrías recargar la página o actualizar la lista de eventos sin recargar la página
+    }
+</script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .event-list {
+        margin-top: 20px;
+    }
+
+    .event {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .add-event-form {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .add-event-form input[type="text"] {
+        padding: 5px;
+        margin-right: 10px;
+    }
+
+    .add-event-form button {
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .month-view {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .day {
+        width: calc(100% / 7);
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ddd;
+        background-color: #fff;
+    }
+
+    .current-day {
+        background-color: lightblue; /* Color de fondo para el día actual */
+    }
+
+    .not-events {
+        text-align: center;
+    }
+
+</style>
