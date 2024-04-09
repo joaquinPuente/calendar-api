@@ -1,15 +1,8 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken"
+import UserController from "../../controllers/user.controller.js";
 
 const router = Router();
-
-const users = [
-    {
-    username:'joacopuente',
-    password:'1234'
-    },
-
-]
 
 function generateAccesToken(user){
     return jwt.sign(user, 'clave-secreta', {expiresIn: '5m'} )
@@ -38,6 +31,8 @@ router.get('/test', validateToken, async(req,res)=>{
     }
 });
 
+router.get('/users', UserController.getAllUsers );
+
 router.get('/login', async (req,res)=>{
     try {
         res.render('login');
@@ -46,26 +41,7 @@ router.get('/login', async (req,res)=>{
     }
 });
 
-router.post('/login', async (req,res)=>{
-    const { username, password} = req.body;
-    const date = new Date();
-    const yearNow = date.getFullYear();
-    // Buscar el usuario en la lista
-    const user = users.find(user => user.username === username);
-    if(user){
-        // Verificar la contraseña
-        if(password === user.password){
-            const accessToken = generateAccesToken(user);
-            // Establecer el token como cookie
-            res.cookie('accessToken', accessToken, { httpOnly: true });
-            res.redirect(`/calendar/${yearNow}`);
-        } else {
-            res.status(401).json('Acceso denegado, contraseña incorrecta');
-        }
-    } else {
-        res.status(401).json('Acceso denegado, usuario no encontrado');
-    }
-});
+router.post('/login', UserController.login )
 
 router.get('/register', async (req,res)=>{
     try {
@@ -75,16 +51,6 @@ router.get('/register', async (req,res)=>{
     }
 });
 
-router.post('/register', async (req,res)=>{
-    const { username, password} = req.body;
-    try {
-        const newUser = { username, password }
-        console.log('newUser: ',newUser);
-        users.push(newUser)
-        res.redirect('/login')
-    } catch (error) {
-        res.json('Register Error', error)
-    }
-});
+router.post('/register', UserController.registerUser );
 
 export default router;
