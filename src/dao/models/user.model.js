@@ -5,7 +5,7 @@ const userModel = mongoose.Schema({
     last_name: {type:String, required: true},
     email: {type:String, required: true},
     password: {type:String, required: true},
-    age: {type:Date},
+    age: {type:Number},
     birthday: {type:Date},
     dates: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Date' }]
 })

@@ -13,8 +13,7 @@ export default class UserService {
 
     static async createUser(data) {
         try {
-            const newUser = await UserDao.create(data);
-            return newUser;
+            return await UserDao.create(data);
         } catch (error) {
             throw new Error(`Error to create user: ${error.message}`);
         }
@@ -44,6 +43,15 @@ export default class UserService {
             return user;
         } catch (error) {
             throw new Error(`Error get user by ID: ${error.message}`);
+        }
+    }
+
+    static async findUserByEmail(email) {
+        try {
+           const user = await UserDao.get({email:email})
+           return user
+        } catch (error) {
+            throw new Error(`Error getting user by email: ${error.message}`);
         }
     }
 

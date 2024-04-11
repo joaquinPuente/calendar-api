@@ -1,6 +1,7 @@
 import path from "path"
 import { fileURLToPath } from "url"
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -25,3 +26,21 @@ export async function verifyPassword(password, hashedPassword) {
     }
 }
 
+export async function generateAccesToken(user){
+    return jwt.sign(user, 'clave-secreta', {expiresIn: '5m'} )
+}
+
+export async function validateToken(req,res,next){
+    const accessToken = req.cookies.accessToken;
+    if(!accessToken){
+        res.status(401).send('Acceso denegado (validateToken)');
+    }
+    jwt.verify(accessToken, 'clave-secreta', (err,user)=>{
+        if(err){
+            res.status(401).send('Acceso denegado, token expirado o incorrecto');
+        } else {
+            req.user = user;
+            next();
+        }
+    });
+}
